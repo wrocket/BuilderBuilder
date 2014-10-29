@@ -62,8 +62,10 @@ var Util = {
             tabLevel = 0;
         }
 
-        for (var i = 0; i < newLines.length; i++) {
-            existingLines.push(Util.tab(tabLevel) + newLines[i]);
+        if (existingLines && newLines) {
+            for (var i = 0; i < newLines.length; i++) {
+                existingLines.push(Util.tab(tabLevel) + newLines[i]);
+            }
         }
     },
 
@@ -71,8 +73,10 @@ var Util = {
     map: function(input, f) {
         var results = [];
 
-        for (var i = 0; i < input.length; i++) {
-            results.push(f(input[i]));
+        if(input) {
+            for (var i = 0; i < input.length; i++) {
+                results.push(f(input[i]));
+            }
         }
 
         return results;
