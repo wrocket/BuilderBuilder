@@ -36,6 +36,10 @@ function generateTestClassName(classDef) {
 
 // Dedupe and sort a list of import statements.
 function gatherImports(imports) {
+    if (!imports) {
+        return []
+    }
+
     var dedupe = {};
     for (var i = 0; i < imports.length; i++) {
         dedupe[imports[i]] = true;
