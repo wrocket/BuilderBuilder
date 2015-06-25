@@ -27,7 +27,17 @@ var DataTypes = {
             return 'Mockito.mock(' + type + '.class)';
         },
         makeEqualityTest: function(generationParms, expected, actual) {
+            return DataTypes._defaultEqualityTest(generationParms, expected, actual);
+        }
+    },
+
+    _defaultEqualityTest: function(generationParms, expected, actual) {
+        if ('junit' === generationParms.assertType) {
             return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
+        } else if('fest' === generationParms.assertType) {
+            return 'assertThat(' + actual + ').isEqualTo(' + expected + ')';
+        } else {
+            return '';
         }
     },
 
@@ -43,7 +53,7 @@ var DataTypes = {
                 return n.toString();
             },
             makeEqualityTest: function(generationParms, expected, actual) {
-                return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
+                return DataTypes._defaultEqualityTest(generationParms, expected, actual);
             }
         },
         'Integer': {
@@ -57,7 +67,7 @@ var DataTypes = {
                 return 'Integer.valueOf(' + n.toString() + ')';
             },
             makeEqualityTest: function(generationParms, expected, actual) {
-                return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
+                return DataTypes._defaultEqualityTest(generationParms, expected, actual);
             }
         },
         'byte': {
@@ -71,7 +81,7 @@ var DataTypes = {
                 return (n % 256).toString();
             },
             makeEqualityTest: function(generationParms, expected, actual) {
-                return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
+                return DataTypes._defaultEqualityTest(generationParms, expected, actual);
             }
         },
         'Byte': {
@@ -85,7 +95,7 @@ var DataTypes = {
                 return 'Byte.valueOf(' + (n % 256).toString() + ')';
             },
             makeEqualityTest: function(generationParms, expected, actual) {
-                return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
+                return DataTypes._defaultEqualityTest(generationParms, expected, actual);
             }
         },
         'boolean': {
@@ -99,7 +109,7 @@ var DataTypes = {
                 return 'true'
             },
             makeEqualityTest: function(generationParms, expected, actual) {
-                return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
+                return DataTypes._defaultEqualityTest(generationParms, expected, actual);
             }
         },
         'Boolean': {
@@ -113,7 +123,7 @@ var DataTypes = {
                 return 'Boolean.TRUE';
             },
             makeEqualityTest: function(generationParms, expected, actual) {
-                return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
+                return DataTypes._defaultEqualityTest(generationParms, expected, actual);
             }
         },
         'long': {
@@ -127,7 +137,7 @@ var DataTypes = {
                 return n.toString() + 'L';
             },
             makeEqualityTest: function(generationParms, expected, actual) {
-                return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
+                return DataTypes._defaultEqualityTest(generationParms, expected, actual);
             }
         },
         'Long': {
@@ -141,7 +151,7 @@ var DataTypes = {
                 return 'Long.valueOf(' + n.toString() + 'L)';
             },
             makeEqualityTest: function(generationParms, expected, actual) {
-                return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
+                return DataTypes._defaultEqualityTest(generationParms, expected, actual);
             }
         },
         'float': {
@@ -155,7 +165,7 @@ var DataTypes = {
                 return n.toString() + '.0f';
             },
             makeEqualityTest: function(generationParms, expected, actual) {
-                return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
+                return DataTypes._defaultEqualityTest(generationParms, expected, actual);
             }
         },
         'Float': {
@@ -169,7 +179,7 @@ var DataTypes = {
                 return 'Float.valueOf(' + n.toString() + '.0f)';
             },
             makeEqualityTest: function(generationParms, expected, actual) {
-                return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
+                return DataTypes._defaultEqualityTest(generationParms, expected, actual);
             }
         },
         'double': {
@@ -183,7 +193,7 @@ var DataTypes = {
                 return n.toString() + '.0d';
             },
             makeEqualityTest: function(generationParms, expected, actual) {
-                return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
+                return DataTypes._defaultEqualityTest(generationParms, expected, actual);
             }
         },
         'Double': {
@@ -197,7 +207,7 @@ var DataTypes = {
                 return 'Double.valueOf(' + n.toString() + '.0d)';
             },
             makeEqualityTest: function(generationParms, expected, actual) {
-                return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
+                return DataTypes._defaultEqualityTest(generationParms, expected, actual);
             }
         },
         'BigDecimal': {
@@ -211,7 +221,7 @@ var DataTypes = {
                 return 'new BigDecimal("' + n.toString() + '.0")';
             },
             makeEqualityTest: function(generationParms, expected, actual) {
-                return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
+                return DataTypes._defaultEqualityTest(generationParms, expected, actual);
             }
         },
         'String': {
@@ -226,7 +236,7 @@ var DataTypes = {
                 return '"string' + n + '"';
             },
             makeEqualityTest: function(generationParms, expected, actual) {
-                return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
+                return DataTypes._defaultEqualityTest(generationParms, expected, actual);
             }
         },
         'List': {
@@ -243,7 +253,7 @@ var DataTypes = {
                 return 'Arrays.asList(' + DataTypes.getType(generics[0]).makeTestValue(generationParms, n) + ')';
             },
             makeEqualityTest: function(generationParms, expected, actual) {
-                return 'assertCollectionEquals(' + expected + ', ' + actual + ')';
+                return DataTypes._defaultEqualityTest(generationParms, expected, actual);
             }
         },
         'Set': {
@@ -260,7 +270,7 @@ var DataTypes = {
                 return 'null /* TODO: Create a constant test value. */';
             },
             makeEqualityTest: function(generationParms, expected, actual) {
-                return 'assertCollectionEquals(' + expected + ', ' + actual + ')';
+                return DataTypes._defaultEqualityTest(generationParms, expected, actual);
             }
         },
         'Collection': {
@@ -277,7 +287,7 @@ var DataTypes = {
                 return 'Arrays.asList(' + DataTypes.getType(generics[0]).makeTestValue(generationParms, n) + ')';
             },
             makeEqualityTest: function(generationParms, expected, actual) {
-                return 'assertCollectionEquals(' + expected + ', ' + actual + ')';
+                return DataTypes._defaultEqualityTest(generationParms, expected, actual);
             }
         },
         'Map': {
@@ -295,7 +305,7 @@ var DataTypes = {
                 return 'null /* TODO: Create a constant test value. */';
             },
             makeEqualityTest: function(generationParms, expected, actual) {
-                return 'assertMapEquals(' + expected + ', ' + actual + ')';
+                return DataTypes._defaultEqualityTest(generationParms, expected, actual);
             }
         },
         'DateTime': {
@@ -309,7 +319,7 @@ var DataTypes = {
                 return 'new DateTime(2014, 1, 2, 3, 4, 5, 6, DateTimeZone.UTC).plusDays(' + n + ')'
             },
             makeEqualityTest: function(generationParms, expected, actual) {
-                return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
+                return DataTypes._defaultEqualityTest(generationParms, expected, actual);
             }
         }
     },

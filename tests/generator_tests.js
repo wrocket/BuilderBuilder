@@ -60,7 +60,7 @@ QUnit.test("Generator - generateClassFileImports - happy", function(assert) {
 	assert.equal(4, result.length);
 });
 
-QUnit.test("Generator - generateTestFileImports - happy", function(assert) {
+QUnit.test("Generator - generateTestFileImports - happy - junit", function(assert) {
 	var classDef = {
 		'members': [{
 			'type': 'DateTime'
@@ -71,7 +71,7 @@ QUnit.test("Generator - generateTestFileImports - happy", function(assert) {
 		}]
 	};
 
-	var result = generateTestFileImports(classDef);
+	var result = generateTestFileImports({assertType: 'junit'}, classDef);
 
 	assert.equal(result[0], 'java.util.ArrayList');
 	assert.equal(result[1], 'java.util.List');
@@ -79,6 +79,29 @@ QUnit.test("Generator - generateTestFileImports - happy", function(assert) {
 	assert.equal(result[3], 'org.joda.time.DateTimeZone');
 	assert.equal(result[4], 'org.junit.Assert');
 	assert.equal(result[5], 'org.junit.Test');
+
+	assert.equal(6, result.length);
+});
+
+QUnit.test("Generator - generateTestFileImports - happy - fest", function(assert) {
+	var classDef = {
+		'members': [{
+			'type': 'DateTime'
+		}, {
+			'type': 'List'
+		}, {
+			'type': 'List'
+		}]
+	};
+
+	var result = generateTestFileImports({assertType: 'fest'}, classDef);
+
+	assert.equal(result[0], 'java.util.ArrayList');
+	assert.equal(result[1], 'java.util.List');
+	assert.equal(result[2], 'org.joda.time.DateTime');
+	assert.equal(result[3], 'org.joda.time.DateTimeZone');
+	assert.equal(result[4], 'org.junit.Test');
+	assert.equal(result[5], 'static org.fest.assertions.api.Assertions.*')
 
 	assert.equal(6, result.length);
 });

@@ -31,12 +31,20 @@ QUnit.test("DataTypes - int - testValue", function(assert) {
 	assert.equal(result, '3');
 });
 
-QUnit.test("DataTypes - int - makeEqualityTest", function(assert) {
+QUnit.test("DataTypes - int - makeEqualityTest - junit", function(assert) {
 	var t = DataTypes.getType('int');
 
-	var result = t.makeEqualityTest({}, 3, 4);
+	var result = t.makeEqualityTest({assertType: 'junit'}, 3, 4);
 
 	assert.equal(result, 'Assert.assertEquals(3, 4)');
+});
+
+QUnit.test("DataTypes - int - makeEqualityTest - fest", function(assert) {
+	var t = DataTypes.getType('int');
+
+	var result = t.makeEqualityTest({assertType: 'fest'}, 3, 4);
+
+	assert.equal(result, 'assertThat(4).isEqualTo(3)');
 });
 
 QUnit.test("DataTypes - int - properties", function(assert) {
@@ -64,12 +72,20 @@ QUnit.test("DataTypes - String - testValue", function(assert) {
 	assert.equal(result, '"string3"');
 });
 
-QUnit.test("DataTypes - String - makeEqualityTest", function(assert) {
+QUnit.test("DataTypes - String - makeEqualityTest - junit", function(assert) {
 	var t = DataTypes.getType('String');
 
-	var result = t.makeEqualityTest({}, '"3"', '"4"');
+	var result = t.makeEqualityTest({assertType: 'junit'}, '"3"', '"4"');
 
 	assert.equal(result, 'Assert.assertEquals("3", "4")');
+});
+
+QUnit.test("DataTypes - String - makeEqualityTest - fest", function(assert) {
+	var t = DataTypes.getType('String');
+
+	var result = t.makeEqualityTest({assertType: 'fest'}, '"3"', '"4"');
+
+	assert.equal(result, 'assertThat("4").isEqualTo("3")');
 });
 
 QUnit.test("DataTypes - String - properties", function(assert) {

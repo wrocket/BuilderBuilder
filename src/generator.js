@@ -69,10 +69,17 @@ function generateClassFileImports(classDef, initialImports) {
 }
 
 // Given a class definition, generate a list of imports required for the test class file.
-function generateTestFileImports(classDef) {
+function generateTestFileImports(params, classDef) {
     var imports = [];
-    imports.push('org.junit.Assert');
+
     imports.push('org.junit.Test');
+
+    if('junit' === params.assertType) {
+        imports.push('org.junit.Assert');
+    } else if('fest' === params.assertType) {
+        imports.push('static org.fest.assertions.api.Assertions.*');
+    }
+
     var members = classDef.members;
     for (var i = 0; i < members.length; i++) {
         var member = members[i];
@@ -319,7 +326,7 @@ function generateTestFile(classDef, parms) {
 
     j.push('<h2>' + generateTestClassFileName(classDef) + '</h2>');
 
-    var imports = generateTestFileImports(classDef);
+    var imports = generateTestFileImports(parms, classDef);
 
     var importCode = Util.map(imports, function(i) {
         return 'import ' + i + ';';
@@ -351,15 +358,19 @@ function generateTestFile(classDef, parms) {
 
     var needCollectionEqualsMethod = false;
     var needMapEqualsMethod = false;
-    for (var i = 0; i < classDef.members.length; i++) {
-        var member = classDef.members[i];
-        var typeObj = DataTypes.getType(member.type);
-        if (typeObj.isCollection) {
-            if (member.generics && member.generics.length == 1) {
-                needCollectionEqualsMethod = true;
-                needNullCollectionsMethod = true;
-            } else if (typeObj.isMap) {
-                needMapEqualsMethod = true;
+
+    // JUnit could use some better collection assertions.
+    if ('junit' === parms.assertType) {
+        for (var i = 0; i < classDef.members.length; i++) {
+            var member = classDef.members[i];
+            var typeObj = DataTypes.getType(member.type);
+            if (typeObj.isCollection) {
+                if (member.generics && member.generics.length == 1) {
+                    needCollectionEqualsMethod = true;
+                    needNullCollectionsMethod = true;
+                } else if (typeObj.isMap) {
+                    needMapEqualsMethod = true;
+                }
             }
         }
     }
@@ -406,8 +417,10 @@ function generateButtonClick() {
     if (!fields || !fields.length) {
         output.innerHTML = '<p>No fields defined.</p>';
     } else {
+        var assertDropdown = document.getElementById("assertionType").value;
         var generationParms = {
-            jdk7initializers: true
+            jdk7initializers: true,
+            assertType: assertDropdown
         };
 
         var classFile = generateClassFile(input, generationParms);
