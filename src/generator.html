@@ -24,11 +24,16 @@ limitations under the License.
 	</head>
 	<body>
 		<h1 class='title'>Immutable Object Generator</h1>
-		<p><input type="text" id="className" placeholder="Class name"></p>
-		<select id="assertionType">
-			<option value="fest">Fest Assertions</option>
-			<option value="junit">JUnit Assertions</option>
-		</select>
+		<p>Class Name: <input type="text" id="className" placeholder="Class name"></p>
+		<p>Use <select id="assertionType">
+			<option value="fest">Fest assertions</option>
+			<option value="junit">JUnit assertions</option>
+		</select> in the test class.</p>
+		<p>Put the builder class
+		<select id="builderLocation">
+			<option value="bottom">at the bottom of the class</option>
+			<option value="afterProps">after property declarations</option>
+		</select>.</p>
 		<p class="memberTextbox"><textarea id='inputText'>
 String myString
 List<Integer> someListOfNumbers

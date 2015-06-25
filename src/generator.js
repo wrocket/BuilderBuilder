@@ -179,9 +179,10 @@ function generateClassFile(classDef, parms) {
         j.push(Util.tab(1) + generatePrivateMember(member, true));
     }
 
-    var builderClass = generateBuilderClass(classDef);
-
-    Util.extend(j, builderClass, 1);
+    if ('afterProps' === parms.builderLocation) {
+        var builderClass = generateBuilderClass(classDef);
+        Util.extend(j, builderClass, 1);
+    }
 
     j.push(Util.tab(1) + 'private ' + classDef.className + '(Builder b) {');
     for (var i = 0; i < classDef.members.length; i++) {
@@ -195,6 +196,11 @@ function generateClassFile(classDef, parms) {
         j.push(Util.tab(1) + 'public ' + generateType(member) + ' get' + member.ucName + '() {');
         j.push(Util.tab(2) + 'return ' + member.lcName + ';');
         j.push(Util.tab(1) + '}');
+    }
+
+    if ('bottom' === parms.builderLocation) {
+        var builderClass = generateBuilderClass(classDef);
+        Util.extend(j, builderClass, 1);
     }
 
     j.push('}');
@@ -417,10 +423,12 @@ function generateButtonClick() {
     if (!fields || !fields.length) {
         output.innerHTML = '<p>No fields defined.</p>';
     } else {
-        var assertDropdown = document.getElementById("assertionType").value;
+        var assertDropdown = document.getElementById('assertionType').value;
+        var builderLocation = document.getElementById('builderLocation').value;
         var generationParms = {
             jdk7initializers: true,
-            assertType: assertDropdown
+            assertType: assertDropdown,
+            builderLocation: builderLocation
         };
 
         var classFile = generateClassFile(input, generationParms);
