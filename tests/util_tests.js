@@ -128,3 +128,47 @@ QUnit.test("Util.map - happy", function(assert) {
 	assert.equal(6, result[2]);
 	assert.equal(8, result[3]);
 });
+
+
+QUnit.test("Util.sortPackages - happy", function(assert) {
+	var packages = ['aaa.bbb', 'aaa.aaa'];
+
+	var result = Util.sortPackages(packages);
+
+	assert.equal(2, result.length);
+	assert.equal(result[0], 'aaa.aaa');
+	assert.equal(result[1], 'aaa.bbb');
+});
+
+QUnit.test("Util.sortPackages - useLength", function(assert) {
+	var packages = ['aaa.bbb', 'aaaa.aaa'];
+
+	var result = Util.sortPackages(packages);
+
+	assert.equal(2, result.length);
+	assert.equal(result[0], 'aaa.bbb');
+	assert.equal(result[1], 'aaaa.aaa');
+});
+
+QUnit.test("Util.sortPackages - shortFirst", function(assert) {
+	var packages = ['aaa.aaa.aaa', 'aaa', 'aaa.aaa'];
+
+	var result = Util.sortPackages(packages);
+
+	assert.equal(3, result.length);
+	assert.equal(result[0], 'aaa');
+	assert.equal(result[1], 'aaa.aaa');
+	assert.equal(result[2], 'aaa.aaa.aaa');
+});
+
+QUnit.test("Util.sortPackages - several", function(assert) {
+	var packages = ['com.bar', 'java.foo', 'com.foo', 'org.asdf'];
+
+	var result = Util.sortPackages(packages);
+
+	assert.equal(4, result.length);
+	assert.equal(result[0], 'com.bar');
+	assert.equal(result[1], 'com.foo');
+	assert.equal(result[2], 'java.foo');
+	assert.equal(result[3], 'org.asdf');
+});

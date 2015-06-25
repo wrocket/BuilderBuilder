@@ -50,14 +50,12 @@ function gatherImports(imports) {
         result.push(i);
     }
 
-    result.sort();
-    return result;
+    return Util.sortPackages(result);
 }
 
 // Given a class definition, generate a list of imports required for the main class file.
-// TODO: This method and generateTestFileImports are similar.
-function generateClassFileImports(classDef) {
-    var imports = [];
+function generateClassFileImports(classDef, initialImports) {
+    var imports = initialImports || [];
     var members = classDef.members;
     for (var i = 0; i < members.length; i++) {
         var member = members[i];
@@ -252,7 +250,7 @@ function generateSimpleBuilderTest(classDef, parms) {
     for (var i = 0; i < classDef.members.length; i++) {
         var m = classDef.members[i];
         var type = DataTypes.getType(m.type);
-        j.push(Util.tab(2) + type.makeEqualityTest(getTestConstantName(m), 'x.get' + m.ucName + '()') + ';');
+        j.push(Util.tab(2) + type.makeEqualityTest(parms, getTestConstantName(m), 'x.get' + m.ucName + '()') + ';');
     }
 
     j.push(Util.tab(1) + '}');
@@ -274,7 +272,7 @@ function generateFromValuesTest(classDef, parms) {
     for (var i = 0; i < classDef.members.length; i++) {
         var m = classDef.members[i];
         var type = DataTypes.getType(m.type);
-        j.push(Util.tab(2) + type.makeEqualityTest('x.get' + m.ucName + '()', 'y.get' + m.ucName + '()') + ';');
+        j.push(Util.tab(2) + type.makeEqualityTest(parms, 'x.get' + m.ucName + '()', 'y.get' + m.ucName + '()') + ';');
     }
 
     j.push(Util.tab(1) + '}');
@@ -338,7 +336,7 @@ function generateTestFile(classDef, parms) {
         var member = classDef.members[i];
         var typeObj = DataTypes.getType(member.type);
         var constantName = getTestConstantName(member);
-        var initialValue = typeObj.makeTestValue(i, member.type, member.generics);
+        var initialValue = typeObj.makeTestValue(parms, i, member.type, member.generics);
 
         j.push(Util.tab(1) + 'private static final ' + generateType(member) + ' ' + constantName + ' = ' + initialValue + ';');
     }

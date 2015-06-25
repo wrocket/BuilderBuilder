@@ -25,6 +25,17 @@ var Util = {
         }
     },
 
+    sortPackages: function(packages) {
+        var result = [];
+        for(var i=0; i<packages.length; i++) {
+            result.push(packages[i]);
+        }
+
+        result.sort();
+
+        return result;
+    },
+
     // Make the first character in a string upper-case, should one exist. E.g.: foobar -> Foobar
     capitalizeFirst: function(str) {
         if (!str || !str.length) {

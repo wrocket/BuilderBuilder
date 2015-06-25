@@ -23,10 +23,10 @@ var DataTypes = {
         initializer: function(generationParms, memberName, valueName) {
             return 'this.' + memberName + ' = ' + valueName + ';';
         },
-        makeTestValue: function(n, type, generics) {
+        makeTestValue: function(generationParms, n, type, generics) {
             return 'Mockito.mock(' + type + '.class)';
         },
-        makeEqualityTest: function(expected, actual) {
+        makeEqualityTest: function(generationParms, expected, actual) {
             return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
         }
     },
@@ -39,10 +39,10 @@ var DataTypes = {
             initializer: function(generationParms, memberName, valueName) {
                 return 'this.' + memberName + ' = ' + valueName + ';';
             },
-            makeTestValue: function(n) {
+            makeTestValue: function(generationParms, n) {
                 return n.toString();
             },
-            makeEqualityTest: function(expected, actual) {
+            makeEqualityTest: function(generationParms, expected, actual) {
                 return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
             }
         },
@@ -53,10 +53,10 @@ var DataTypes = {
             initializer: function(generationParms, memberName, valueName) {
                 return 'this.' + memberName + ' = ' + valueName + ';';
             },
-            makeTestValue: function(n) {
+            makeTestValue: function(generationParms, n) {
                 return 'Integer.valueOf(' + n.toString() + ')';
             },
-            makeEqualityTest: function(expected, actual) {
+            makeEqualityTest: function(generationParms, expected, actual) {
                 return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
             }
         },
@@ -67,10 +67,10 @@ var DataTypes = {
             initializer: function(generationParms, memberName, valueName) {
                 return 'this.' + memberName + ' = ' + valueName + ';';
             },
-            makeTestValue: function(n) {
+            makeTestValue: function(generationParms, n) {
                 return (n % 256).toString();
             },
-            makeEqualityTest: function(expected, actual) {
+            makeEqualityTest: function(generationParms, expected, actual) {
                 return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
             }
         },
@@ -81,10 +81,10 @@ var DataTypes = {
             initializer: function(generationParms, memberName, valueName) {
                 return 'this.' + memberName + ' = ' + valueName + ';';
             },
-            makeTestValue: function(n) {
+            makeTestValue: function(generationParms, n) {
                 return 'Byte.valueOf(' + (n % 256).toString() + ')';
             },
-            makeEqualityTest: function(expected, actual) {
+            makeEqualityTest: function(generationParms, expected, actual) {
                 return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
             }
         },
@@ -95,10 +95,10 @@ var DataTypes = {
             initializer: function(generationParms, memberName, valueName) {
                 return 'this.' + memberName + ' = ' + valueName + ';';
             },
-            makeTestValue: function(n) {
+            makeTestValue: function(generationParms, n) {
                 return 'true'
             },
-            makeEqualityTest: function(expected, actual) {
+            makeEqualityTest: function(generationParms, expected, actual) {
                 return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
             }
         },
@@ -109,10 +109,10 @@ var DataTypes = {
             initializer: function(generationParms, memberName, valueName) {
                 return 'this.' + memberName + ' = ' + valueName + ';';
             },
-            makeTestValue: function(n) {
+            makeTestValue: function(generationParms, n) {
                 return 'Boolean.TRUE';
             },
-            makeEqualityTest: function(expected, actual) {
+            makeEqualityTest: function(generationParms, expected, actual) {
                 return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
             }
         },
@@ -123,10 +123,10 @@ var DataTypes = {
             initializer: function(generationParms, memberName, valueName) {
                 return 'this.' + memberName + ' = ' + valueName + ';';
             },
-            makeTestValue: function(n) {
+            makeTestValue: function(generationParms, n) {
                 return n.toString() + 'L';
             },
-            makeEqualityTest: function(expected, actual) {
+            makeEqualityTest: function(generationParms, expected, actual) {
                 return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
             }
         },
@@ -137,10 +137,10 @@ var DataTypes = {
             initializer: function(generationParms, memberName, valueName) {
                 return 'this.' + memberName + ' = ' + valueName + ';';
             },
-            makeTestValue: function(n) {
+            makeTestValue: function(generationParms, n) {
                 return 'Long.valueOf(' + n.toString() + 'L)';
             },
-            makeEqualityTest: function(expected, actual) {
+            makeEqualityTest: function(generationParms, expected, actual) {
                 return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
             }
         },
@@ -151,10 +151,10 @@ var DataTypes = {
             initializer: function(generationParms, memberName, valueName) {
                 return 'this.' + memberName + ' = ' + valueName + ';';
             },
-            makeTestValue: function(n) {
+            makeTestValue: function(generationParms, n) {
                 return n.toString() + '.0f';
             },
-            makeEqualityTest: function(expected, actual) {
+            makeEqualityTest: function(generationParms, expected, actual) {
                 return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
             }
         },
@@ -165,10 +165,10 @@ var DataTypes = {
             initializer: function(generationParms, memberName, valueName) {
                 return 'this.' + memberName + ' = ' + valueName + ';';
             },
-            makeTestValue: function(n) {
+            makeTestValue: function(generationParms, n) {
                 return 'Float.valueOf(' + n.toString() + '.0f)';
             },
-            makeEqualityTest: function(expected, actual) {
+            makeEqualityTest: function(generationParms, expected, actual) {
                 return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
             }
         },
@@ -179,10 +179,10 @@ var DataTypes = {
             initializer: function(generationParms, memberName, valueName) {
                 return 'this.' + memberName + ' = ' + valueName + ';';
             },
-            makeTestValue: function(n) {
+            makeTestValue: function(generationParms, n) {
                 return n.toString() + '.0d';
             },
-            makeEqualityTest: function(expected, actual) {
+            makeEqualityTest: function(generationParms, expected, actual) {
                 return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
             }
         },
@@ -193,10 +193,10 @@ var DataTypes = {
             initializer: function(generationParms, memberName, valueName) {
                 return 'this.' + memberName + ' = ' + valueName + ';';
             },
-            makeTestValue: function(n) {
+            makeTestValue: function(generationParms, n) {
                 return 'Double.valueOf(' + n.toString() + '.0d)';
             },
-            makeEqualityTest: function(expected, actual) {
+            makeEqualityTest: function(generationParms, expected, actual) {
                 return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
             }
         },
@@ -207,10 +207,10 @@ var DataTypes = {
             initializer: function(generationParms, memberName, valueName) {
                 return 'this.' + memberName + ' = ' + valueName + ';';
             },
-            makeTestValue: function(n) {
+            makeTestValue: function(generationParms, n) {
                 return 'new BigDecimal("' + n.toString() + '.0")';
             },
-            makeEqualityTest: function(expected, actual) {
+            makeEqualityTest: function(generationParms, expected, actual) {
                 return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
             }
         },
@@ -222,10 +222,10 @@ var DataTypes = {
             initializer: function(generationParms, memberName, valueName) {
                 return 'this.' + memberName + ' = ' + valueName + ';';
             },
-            makeTestValue: function(n) {
+            makeTestValue: function(generationParms, n) {
                 return '"string' + n + '"';
             },
-            makeEqualityTest: function(expected, actual) {
+            makeEqualityTest: function(generationParms, expected, actual) {
                 return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
             }
         },
@@ -239,10 +239,10 @@ var DataTypes = {
                 var emptyCheck = valueName + ' == null || ' + valueName + '.isEmpty()';
                 return 'this.' + memberName + ' = ' + emptyCheck + ' ? Collections.' + genericExp + ' emptyList() : Collections.unmodifiableList(new ArrayList' + newGenerics + '(' + valueName + '));';
             },
-            makeTestValue: function(n, type, generics) {
-                return 'Arrays.asList(' + DataTypes.getType(generics[0]).makeTestValue(n) + ')';
+            makeTestValue: function(generationParms, n, type, generics) {
+                return 'Arrays.asList(' + DataTypes.getType(generics[0]).makeTestValue(generationParms, n) + ')';
             },
-            makeEqualityTest: function(expected, actual) {
+            makeEqualityTest: function(generationParms, expected, actual) {
                 return 'assertCollectionEquals(' + expected + ', ' + actual + ')';
             }
         },
@@ -256,10 +256,10 @@ var DataTypes = {
                 var emptyCheck = valueName + ' == null || ' + valueName + '.isEmpty()';
                 return 'this.' + memberName + ' = ' + emptyCheck + ' ? Collections.' + genericExp + ' emptySet() : Collections.unmodifiableSet(new HashSet' + newGenerics + '(' + valueName + '));';
             },
-            makeTestValue: function(n, type, generics) {
+            makeTestValue: function(generationParms, n, type, generics) {
                 return 'null /* TODO: Create a constant test value. */';
             },
-            makeEqualityTest: function(expected, actual) {
+            makeEqualityTest: function(generationParms, expected, actual) {
                 return 'assertCollectionEquals(' + expected + ', ' + actual + ')';
             }
         },
@@ -273,10 +273,10 @@ var DataTypes = {
                 var emptyCheck = valueName + ' == null || ' + valueName + '.isEmpty()';
                 return 'this.' + memberName + ' = ' + emptyCheck + ' ? Collections.' + genericExp + ' emptyList() : Collections.unmodifiableList(new ArrayList' + newGenerics + '(' + valueName + '));';
             },
-            makeTestValue: function(n, type, generics) {
-                return 'Arrays.asList(' + DataTypes.getType(generics[0]).makeTestValue(n) + ')';
+            makeTestValue: function(generationParms, n, type, generics) {
+                return 'Arrays.asList(' + DataTypes.getType(generics[0]).makeTestValue(generationParms, n) + ')';
             },
-            makeEqualityTest: function(expected, actual) {
+            makeEqualityTest: function(generationParms, expected, actual) {
                 return 'assertCollectionEquals(' + expected + ', ' + actual + ')';
             }
         },
@@ -291,10 +291,10 @@ var DataTypes = {
                 var emptyCheck = valueName + ' == null || ' + valueName + '.isEmpty()';
                 return 'this.' + memberName + ' = ' + emptyCheck + ' ? Collections.' + genericExp + ' emptyMap() : Collections.unmodifiableMap(new HashMap' + newGenerics + '(' + valueName + '));';
             },
-            makeTestValue: function(n, type, generics) {
+            makeTestValue: function(generationParms, n, type, generics) {
                 return 'null /* TODO: Create a constant test value. */';
             },
-            makeEqualityTest: function(expected, actual) {
+            makeEqualityTest: function(generationParms, expected, actual) {
                 return 'assertMapEquals(' + expected + ', ' + actual + ')';
             }
         },
@@ -305,10 +305,10 @@ var DataTypes = {
             initializer: function(generationParms, memberName, valueName) {
                 return 'this.' + memberName + ' = ' + valueName + ';';
             },
-            makeTestValue: function(n) {
+            makeTestValue: function(generationParms, n) {
                 return 'new DateTime(2014, 1, 2, 3, 4, 5, 6, DateTimeZone.UTC).plusDays(' + n + ')'
             },
-            makeEqualityTest: function(expected, actual) {
+            makeEqualityTest: function(generationParms, expected, actual) {
                 return 'Assert.assertEquals(' + expected + ', ' + actual + ')';
             }
         }

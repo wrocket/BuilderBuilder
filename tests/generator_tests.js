@@ -20,10 +20,10 @@ QUnit.test("Generator - gatherImports - happy", function(assert) {
 	var result = gatherImports(input);
 
 	assert.equal(result.length, 4);
-	assert.equal('aaa.bbb', result[0]);
-	assert.equal('foo.bar.baz', result[1]);
-	assert.equal('java.lang', result[2]);
-	assert.equal('java.util', result[3]);
+	assert.equal(result[0], 'aaa.bbb');
+	assert.equal(result[1], 'foo.bar.baz');
+	assert.equal(result[2], 'java.lang');
+	assert.equal(result[3], 'java.util');
 });
 
 QUnit.test("Generator - gatherImports - empty", function(assert) {
@@ -52,10 +52,33 @@ QUnit.test("Generator - generateClassFileImports - happy", function(assert) {
 
 	var result = generateClassFileImports(classDef);
 
-	assert.equal('java.util.ArrayList', result[0]);
-	assert.equal('java.util.Collections', result[1]);
-	assert.equal('java.util.List', result[2]);
-	assert.equal('org.joda.time.DateTime', result[3]);
+	assert.equal(result[0], 'java.util.ArrayList');
+	assert.equal(result[1], 'java.util.Collections');
+	assert.equal(result[2], 'java.util.List');
+	assert.equal(result[3], 'org.joda.time.DateTime');
 
 	assert.equal(4, result.length);
+});
+
+QUnit.test("Generator - generateTestFileImports - happy", function(assert) {
+	var classDef = {
+		'members': [{
+			'type': 'DateTime'
+		}, {
+			'type': 'List'
+		}, {
+			'type': 'List'
+		}]
+	};
+
+	var result = generateTestFileImports(classDef);
+
+	assert.equal(result[0], 'java.util.ArrayList');
+	assert.equal(result[1], 'java.util.List');
+	assert.equal(result[2], 'org.joda.time.DateTime');
+	assert.equal(result[3], 'org.joda.time.DateTimeZone');
+	assert.equal(result[4], 'org.junit.Assert');
+	assert.equal(result[5], 'org.junit.Test');
+
+	assert.equal(6, result.length);
 });
